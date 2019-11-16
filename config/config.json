@@ -1,0 +1,63 @@
+{
+	"Env" : "Dev",
+	"Dev" : {
+		"Site" : {
+			"Name" : "lion",
+			"Url" : "localhost",
+			"Port" : 8000,
+			"LogToFile" : false,
+			"LogLevel" : "info",
+			"GracefulShutdownSec" : 5,
+			"CheckAliveTimeoutSec" : 5,
+			"ReadTimeoutSec" : 30,
+			"ReadHeaderTimeoutSec" : 30,
+			"WriteTimeoutSec" : 30,
+			"IdleTimeoutSec" : 60,
+			"MaxHeaderBytes" : 1000000,
+			"StaticFilePath" : "<static_file_path>",
+			"UrlRewrite" : true
+		},
+		"Database" : {
+			"Name" : "<db_name>",
+			"Host" : "<ip or hostname>",
+			"Port" : 3306,
+			"Username" : "<username>",
+			"Password" : "<password>"
+		},
+		"TemplateConfig" : {
+			"Enable" : true,
+			"Path" : "templates",
+			"FileExt" : ".gohtml"				
+		}	
+	},
+	"Prod" : {
+		"Site" : {
+			"Name" : "<domain_name>",
+			"Url" : "<url>",
+			"Port" : 80,
+			"LogToFile" : false,
+			"LogLevel" : "info",
+			"GracefulShutdownSec" : 5,
+			"CheckAliveTimeoutSec" : 5,
+			"ReadTimeoutSec" : 30,
+			"ReadHeaderTimeoutSec" : 30,
+			"WriteTimeoutSec" : 30,
+			"IdleTimeoutSec" : 60,
+			"MaxHeaderBytes" : 1000000,
+			"StaticFilePath" : "<static_file_path>",
+			"UrlRewrite" : true
+		},
+		"Database" : {
+			"Name" : "<db_name>",
+			"Host" : "<ip or hostname>",
+			"Port" : 3306,
+			"Username" : "<username>",
+			"Password" : "<password>"
+		},
+		"TemplateConfig" : {
+			"Enable" : true,
+			"Path" : "templates",
+			"FileExt" : ".gohtml"				
+		}		
+	}
+}
