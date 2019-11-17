@@ -38,6 +38,8 @@ class MyHandler(httpUtil.Handler):
 		obj.send_header('Content-type','text/plain')
 		obj.end_headers()
 		obj.wfile.write(bytearray(self.name,'utf-8'))
+		url_param_map = httpUtil.get_url_param_map(obj)
+		obj.wfile.write(bytearray(str(url_param_map) if url_param_map is not None else str('{}') ,'utf-8'))
 		
 class MyChainHandler(httpUtil.ChainHandler):
 	def __init__(self,chain_name,retTF,config=None):

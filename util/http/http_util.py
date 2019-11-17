@@ -164,3 +164,14 @@ def default_not_found(self : httpServer.BaseHTTPRequestHandler):
 	self.send_header('Content-type','text/plain')
 	self.end_headers()
 	self.wfile.write(bytearray(httpClient.responses[httpClient.NOT_FOUND],'utf-8'))
+	
+def get_url_param_map(self : httpServer.BaseHTTPRequestHandler):
+	param = self.path.split("?")
+	if param is not None and len(param)>1:
+		ret_map = {}
+		for param_value in param[1].split("&"):
+			(key,value) = param_value.split("=")
+			ret_map[key] = value
+		return ret_map	
+	else:
+		return None
