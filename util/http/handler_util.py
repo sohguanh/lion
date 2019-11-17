@@ -6,13 +6,24 @@ import logging
 import config
 import util.http as httpUtil
 
-def StartupInit(config) :
+def StartupInit(config,dbPool) :
 	'''
 	ENTRY POINT: perform any pre-loading/caching of objects or anything else before server startup in here (if any)
 	'''
 	logging.info('startup init ...')
+	
+	#take note below is an example on how to use dbPool
+	if dbPool is not None:
+		conn = dbPool.get_connection()
+		cursor = conn.cursor()
+		query = ("SELECT CURRENT_DATE()")
+		cursor.execute(query)
+		for curr_date in cursor:
+			logging.info(curr_date)
+		cursor.close()
+		conn.close()
 
-def ShutdownCleanup(config):
+def ShutdownCleanup(config,dbPool):
 	'''
 	ENTRY POINT: perform any cleaning up of objects or anything else before server shutdown in here (if any)
 	'''
@@ -64,7 +75,7 @@ class MyChainPathParamHandler(httpUtil.Handler):
 		obj.wfile.write(bytearray(json.dumps(param_map, indent = 4),'utf-8'))
 		return self.ret		
 		
-def RegisterHandler(config):
+def RegisterHandler(config,dbPool):
 	'''
 	ENTRY POINT: register all handlers in here
 	'''

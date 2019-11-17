@@ -9,6 +9,7 @@ import logging
 
 import util.http as httpUtil
 import config
+import util.db as dbUtil
 
 def ping(config):
 	try:
@@ -19,7 +20,7 @@ def ping(config):
 		
 def signal_handler(sig, frame):
 	logging.info("received an interrupt signal, server shutting down ...")	
-	t = threading.Thread(target=httpUtil.ShutdownCleanup,args=(config,))
+	t = threading.Thread(target=httpUtil.ShutdownCleanup,args=(config,dbPool))
 	t.start()
 	t.join(config['Site']['GracefulShutdownSec'])
 	raise Exception
@@ -28,7 +29,9 @@ if __name__ == "__main__":
 	try:
 		signal.signal(signal.SIGINT, signal_handler)
 		config = config.Config().get_instance()		
-		threads = [ threading.Thread(target=httpUtil.StartupInit,args=(config,)), threading.Thread(target=httpUtil.RegisterHandler,args=(config,)) ]
+		#dbPool = dbUtil.Db(config).get_instance(config) #uncomment this line once MySQL is up
+		dbPool = None #comment/remove this line once MySQL is up
+		threads = [ threading.Thread(target=httpUtil.StartupInit,args=(config,dbPool)), threading.Thread(target=httpUtil.RegisterHandler,args=(config,dbPool)) ]
 		for t in threads:
 			t.start()
 		for t in threads:

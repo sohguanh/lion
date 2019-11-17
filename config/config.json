@@ -22,7 +22,8 @@
 			"Host" : "<ip or hostname>",
 			"Port" : 3306,
 			"Username" : "<username>",
-			"Password" : "<password>"
+			"Password" : "<password>",
+			"PoolSize" : 10
 		},
 		"TemplateConfig" : {
 			"Enable" : true,
@@ -52,7 +53,8 @@
 			"Host" : "<ip or hostname>",
 			"Port" : 3306,
 			"Username" : "<username>",
-			"Password" : "<password>"
+			"Password" : "<password>",
+			"PoolSize" : 10
 		},
 		"TemplateConfig" : {
 			"Enable" : true,
