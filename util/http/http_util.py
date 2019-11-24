@@ -4,11 +4,58 @@ import http.client as httpClient
 import re
 import collections
 import logging
+import os
+import posixpath
+import urllib
+import shutil
+import mimetypes
 from abc import ABC, abstractmethod
 
 class RequestHandler(httpServer.BaseHTTPRequestHandler):
 	def initialize(self, config1):
 		self.config = config1
+		self.static_file_path = self.register_static_path(self, config1['Site']['StaticFilePath'])
+		
+	def register_static_path(self, path):
+		if path is not None and os.path.isdir(path) and os.path.exists(path):
+			static_file_path = "".join(["/",os.path.basename(path)])
+		else:
+			static_file_path = "".join(["/",os.path.basename(os.getcwd())])
+		return static_file_path
+		
+	def serve_static_file(self, path):
+		path = self.translate_path(path)
+		logging.debug("serve_static_file: "+path)
+		if os.path.isdir(path):
+			default_not_found(self)
+			return
+		try:
+			f = open(path, 'rb')
+		except IOError:
+			default_not_found(self)
+			return		
+		self.send_response(httpClient.OK)
+		ctype = mimetypes.guess_type(path)
+		self.send_header("Content-type", ctype[0] if ctype[0] is not None else "application/octet-stream")
+		fs = os.fstat(f.fileno())
+		self.send_header("Content-Length", str(fs[6]))
+		self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
+		self.end_headers()
+		shutil.copyfileobj(f, self.wfile)
+
+	def translate_path(self, path):
+		path = path.split('?',1)[0]
+		path = path.split('#',1)[0]
+		path = posixpath.normpath(urllib.parse.unquote(path))
+		words = path.split('/')
+		words = filter(None, words)
+		path = os.getcwd()
+		for word in words:
+			drive, word = os.path.splitdrive(word)
+			head, word = os.path.split(word)
+			if word in (os.curdir, os.pardir): continue
+			path = os.path.join(path, word)
+		return path	
 		
 	def do_POST(self):
 		logging.debug("http post")
@@ -94,6 +141,10 @@ def process(self : httpServer.BaseHTTPRequestHandler, method):
 		self.send_header('Content-type','text/plain')
 		self.end_headers()
 		self.wfile.write(bytearray('I am alive!','utf-8'))	
+		return
+		
+	if self.static_file_path is not None and self.path.startswith(self.static_file_path):
+		self.serve_static_file(self.path)
 		return
 		
 	#iterate registered_and/or chain handlers to see if key match self.path
