@@ -7,7 +7,7 @@ Python mini-web framework (Python 3.X and above)
 Ensure config/config.json are setup correctly for your environment.
 
 *Step 2*
-Start to add your application specific code in util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def RegisterHandler to register your handler. def StartupInit show a small example on how to use dbPool which interface with MySQL.
+Start to add your application specific code in util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def register_handlers to register your handler. def startup_init show a small example on how to use dbPool which interface with MySQL.
 
 **Different methods for registering handlers to url**
 ```
@@ -46,7 +46,7 @@ class ChainPathParamHandler(ABC):
 From Windows Command Prompt or Linux terminal, type <path_to_python3.X> lion.py or <path_to_python3.X> lion.py &
 
 *Step 4*
-Use a browser and navigate to your configured url in Step 1 config.json e.g http://localhost:8000
+Use a browser and navigate to your configured url in Step 1 config.json e.g ht&#8203;tp://localhost:8000
 You should see a message I am alive! This mean your http server is up and running.
 To shutdown, send a SIGINT signal. Ctrl-C for Windows Command Prompt. kill -SIGINT <pid> for Linux.
   
