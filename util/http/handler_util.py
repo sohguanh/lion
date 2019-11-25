@@ -5,8 +5,9 @@ import logging
 
 import config
 import util.http as httpUtil
+import util.template as templateUtil
 
-def StartupInit(config,dbPool) :
+def startup_init(config,dbPool) :
 	'''
 	ENTRY POINT: perform any pre-loading/caching of objects or anything else before server startup in here (if any)
 	'''
@@ -23,7 +24,7 @@ def StartupInit(config,dbPool) :
 		cursor.close()
 		conn.close()
 
-def ShutdownCleanup(config,dbPool):
+def shutdown_cleanup(config,dbPool):
 	'''
 	ENTRY POINT: perform any cleaning up of objects or anything else before server shutdown in here (if any)
 	'''
@@ -51,6 +52,9 @@ class MyChainHandler(httpUtil.ChainHandler):
 		obj.send_header('Content-type','text/plain')
 		obj.end_headers()
 		obj.wfile.write(bytearray(self.chain_name,'utf-8'))		
+		tpl = templateUtil.get_template("helloworld1")
+		if tpl:			
+			obj.wfile.write(bytearray(tpl.safe_substitute({'Title':'new_title','Name':'new_name'}),'utf-8'))
 		return self.ret
 		
 class MyPathParamHandler(httpUtil.Handler):
@@ -77,7 +81,7 @@ class MyChainPathParamHandler(httpUtil.Handler):
 		obj.wfile.write(bytearray(json.dumps(param_map, indent = 4),'utf-8'))
 		return self.ret		
 		
-def RegisterHandler(config,dbPool):
+def register_handlers(config,dbPool):
 	'''
 	ENTRY POINT: register all handlers in here
 	'''

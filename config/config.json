@@ -28,7 +28,7 @@
 		"TemplateConfig" : {
 			"Enable" : true,
 			"Path" : "templates",
-			"FileExt" : ".gohtml"				
+			"FileExt" : ".pyhtml"				
 		}	
 	},
 	"Prod" : {
@@ -59,7 +59,7 @@
 		"TemplateConfig" : {
 			"Enable" : true,
 			"Path" : "templates",
-			"FileExt" : ".gohtml"				
+			"FileExt" : ".pyhtml"				
 		}		
 	}
 }
