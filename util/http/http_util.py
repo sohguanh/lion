@@ -11,6 +11,8 @@ import shutil
 import mimetypes
 from abc import ABC, abstractmethod
 
+import util.http as httpUtil
+
 class RequestHandler(httpServer.BaseHTTPRequestHandler):
 	def initialize(self, config1):
 		self.config = config1
@@ -142,6 +144,9 @@ def process(self : httpServer.BaseHTTPRequestHandler, method):
 		self.end_headers()
 		self.wfile.write(bytearray('I am alive!','utf-8'))	
 		return
+		
+	if self.config['Site']['UrlRewrite']:
+		urlpath = httpUtil.get_rewrite_url(self.path)
 		
 	if self.static_file_path is not None and self.path.startswith(self.static_file_path):
 		self.serve_static_file(self.path)

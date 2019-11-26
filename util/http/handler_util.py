@@ -120,3 +120,10 @@ def register_handlers(config,dbPool):
 	#must implement "interface" in httpUtil.ChainPathParamHandler	
 	httpUtil.register_chain_handler_path_param("/hello6/{hi}/:bye", [MyChainPathParamHandler("My Path Param Chain Handler 1",True,config),MyChainPathParamHandler("My Path Param Chain Handler 2",True,config)], [httpUtil.HTTP_METHOD["GET"], httpUtil.HTTP_METHOD["POST"]])	
 	
+	#take note below are just examples on how to add rewrite url. source_url parameter accepted placeholder are {} and : and target_url parameter substituition syntax is $1 $ 2 etc
+	httpUtil.add_rewrite_url("/test/me/1", "/hello1")
+	httpUtil.add_rewrite_url("/test/me/2", "/hello2")
+	httpUtil.add_rewrite_url_regex("^/test/me/[3]$", "/hello3/aaa/123")
+	httpUtil.add_rewrite_url_regex("^/test/me/[4]$", "/hello4/bbb/456")
+	httpUtil.add_rewrite_url_path_param("/test/me/5/{hi}/:bye", "/hello5/$1/$2")
+	httpUtil.add_rewrite_url_path_param("/test/me/6/{hi}/:bye", "/hello6/$1/$2")
