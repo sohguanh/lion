@@ -62,6 +62,17 @@ To shutdown, send a SIGINT signal. Ctrl-C for Windows Command Prompt. kill -SIGI
 | handler_path_param | ht&#8203;tp://localhost:8000/hello5/123/456 | 
 | chain_handler_path_param | ht&#8203;tp://localhost:8000/hello6/123/456 | 
 
+**Sample rewrite url based on the example code**
+
+| Source Url | Target Url |
+| --- | --- |
+| ht&#8203;tp://localhost:8000/test/me/1 | ht&#8203;tp://localhost:8000/hello1 |
+| ht&#8203;tp://localhost:8000/test/me/2 | ht&#8203;tp://localhost:8000/hello2 |
+| ht&#8203;tp://localhost:8000/test/me/3 | ht&#8203;tp://localhost:8000/hello3/abc/123 |
+| ht&#8203;tp://localhost:8000/test/me/4 | ht&#8203;tp://localhost:8000/hello4/abc/456  |
+| ht&#8203;tp://localhost:8000/test/me/5/123/456 | ht&#8203;tp://localhost:8000/hello5/123/456 | 
+| ht&#8203;tp://localhost:8000/test/me/6/123/456 | ht&#8203;tp://localhost:8000/hello6/123/456 |
+
 **Install below Python MySQL Connector dependency package separately**
 
 *Step 1* 
