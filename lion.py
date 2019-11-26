@@ -6,6 +6,7 @@ import threading as threading
 import http.server as httpServer
 import signal
 import logging
+import os
 
 import util.http as httpUtil
 import config
@@ -49,3 +50,4 @@ if __name__ == "__main__":
 		logging.error(str(e))
 	finally:
 		server.socket.close()
+	os.kill(os.getpid(), signal.SIGTERM)

@@ -6,6 +6,7 @@ import logging
 import config
 import util.http as httpUtil
 import util.template as templateUtil
+import util.ratelimiter as rateLimiter
 
 def startup_init(config,dbPool) :
 	'''
@@ -81,6 +82,21 @@ class MyChainPathParamHandler(httpUtil.Handler):
 		obj.wfile.write(bytearray(json.dumps(param_map, indent = 4),'utf-8'))
 		return self.ret		
 		
+class MyTokenBucketHandler(httpUtil.ChainHandler):
+	def __init__(self, maximum_amt=30, refill_duration_sec=30, refill_amt=5):
+		self.token_bucket = rateLimiter.TokenBucket(maximum_amt,refill_duration_sec,refill_amt)		
+		self.token_bucket.start_timer()
+		
+	def stop_timer(self):
+		if self.token_bucket is not None:
+			self.token_bucket.stop_timer()
+		
+	def handle(self, obj : httpServer.BaseHTTPRequestHandler) -> bool:
+		allowed = self.token_bucket.is_allowed()
+		if not allowed:
+			httpUtil.default_not_found(obj)
+		return allowed
+		
 def register_handlers(config,dbPool):
 	'''
 	ENTRY POINT: register all handlers in here
@@ -127,3 +143,6 @@ def register_handlers(config,dbPool):
 	httpUtil.add_rewrite_url_regex("^/test/me/[4]$", "/hello4/bbb/456")
 	httpUtil.add_rewrite_url_path_param("/test/me/5/{hi}/:bye", "/hello5/$1/$2")
 	httpUtil.add_rewrite_url_path_param("/test/me/6/{hi}/:bye", "/hello6/$1/$2")
+	
+	#take note below are just examples on how to use endpoint rate limiter using token bucket algorithm
+	httpUtil.register_chain_handler("/hello7", [MyTokenBucketHandler(2,5,1),MyChainHandler("My Chain Handler 7",True,config)], [httpUtil.HTTP_METHOD["GET"], httpUtil.HTTP_METHOD["POST"]])	
