@@ -53,7 +53,7 @@ class MyChainHandler(httpUtil.ChainHandler):
 		obj.end_headers()
 		obj.wfile.write(bytearray(self.chain_name,'utf-8'))		
 		tpl = templateUtil.get_template("helloworld1")
-		if tpl:			
+		if tpl is not None:			
 			obj.wfile.write(bytearray(tpl.safe_substitute({'Title':'new_title','Name':'new_name'}),'utf-8'))
 		return self.ret
 		

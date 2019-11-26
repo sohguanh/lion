@@ -22,4 +22,4 @@ def register_template(config,dbPool):
 					registered_templates[name.split(file_ext)[0]] = Template(f.read())
 					
 def get_template(name) -> Template:
-	return registered_templates[name] if name in registered_templates else ''
+	return registered_templates[name] if name in registered_templates else None
