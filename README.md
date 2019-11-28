@@ -73,6 +73,43 @@ To shutdown, send a SIGINT signal. Ctrl-C for Windows Command Prompt. kill -SIGI
 | ht&#8203;tp://localhost:8000/test/me/5/123/456 | ht&#8203;tp://localhost:8000/hello5/123/456 | 
 | ht&#8203;tp://localhost:8000/test/me/6/123/456 | ht&#8203;tp://localhost:8000/hello6/123/456 |
 
+**Internalization aka i18n**
+
+Implementation is **different** from Python normal approach. It is model after Java Locale, ResourceBundle, .properties file concept instead. Follow below steps to understand to use. Then change accordingly to your needs.
+
+*Step 1*
+Inside config/config.json configure under i18nConfig. The attribute names are self-explanatory.
+```
+"i18nConfig" : {
+	"Enable" : true,
+	"Path" : "templates/i18n",
+	"FileExt" : ".properties"				
+}
+```
+
+*Step 2*
+Refer to util/http/handler_util.py under MyChainHandler code section to see how to use.
+```
+import util.i18n as i18nUtil
+...
+rb_en_US = i18nUtil.ResourceBundle.get_bundle(self.config, "messages", i18nUtil.Locale("en", "US"))
+rb_zh_CN = i18nUtil.ResourceBundle.get_bundle(self.config, "messages", i18nUtil.Locale("zh", "CN"))
+rb_zh_TW = i18nUtil.ResourceBundle.get_bundle(self.config, "messages", i18nUtil.Locale("zh", "TW"))
+param = {
+'Title': 'Lion',
+'Greeting1': rb_en_US['how.are.you'],
+'Greeting2': rb_zh_CN['how.are.you'],
+'Greeting3': rb_zh_TW['how.are.you'],
+'SpecialDate1': rb_en_US['special.date'].format('03', 12, 1974),
+'SpecialDate2': rb_zh_CN['special.date'].format(1974, 12, '03'),
+'SpecialDate3': rb_zh_TW['special.date'].format(1974, 12, '03')
+}
+obj.wfile.write(bytearray(tpl.safe_substitute(param), 'utf-8'))
+```
+
+*Step 3*
+Go to ht&#8203;tp://localhost:8000/hello2 and you should be able to see the webpage that render English, Simplified Chinese and Traditional Chinese labels.
+
 **Install below Python MySQL Connector dependency package separately**
 
 *Step 1* 
