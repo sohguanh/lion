@@ -119,6 +119,17 @@ class MyTokenBucketHandler(httpUtil.ChainHandler):
         return allowed
 
 
+class MySlidingWindowHandler(httpUtil.ChainHandler):
+    def __init__(self, request_per_min=30):
+        self.sliding_window = rateLimiter.SlidingWindow(request_per_min)
+
+    def handle(self, obj: httpServer.BaseHTTPRequestHandler) -> bool:
+        allowed = self.sliding_window.is_allowed()
+        if not allowed:
+            httpUtil.default_not_found(obj)
+        return allowed
+
+
 def register_handlers(config, dbPool):
     '''
     ENTRY POINT: register all handlers in here
@@ -168,3 +179,6 @@ def register_handlers(config, dbPool):
 
     # take note below are just examples on how to use endpoint rate limiter using token bucket algorithm
     httpUtil.register_chain_handler("/hello7", [MyTokenBucketHandler(2, 5, 1), MyChainHandler("My Chain Handler 7", True, config)], [httpUtil.HTTP_METHOD["GET"], httpUtil.HTTP_METHOD["POST"]])
+
+    # take note below are just examples on how to use endpoint rate limiter using sliding window algorithm
+    httpUtil.register_chain_handler("/hello8", [MySlidingWindowHandler(2), MyChainHandler("My Chain Handler 8", True, config)], [httpUtil.HTTP_METHOD["GET"], httpUtil.HTTP_METHOD["POST"]])
