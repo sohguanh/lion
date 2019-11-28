@@ -1,0 +1,16 @@
+<html>
+<header>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Python mini-web framework $Title</title>
+</header>
+<body>
+Hello world <p>
+English : $Greeting1 <br>
+Simplified Chinese : $Greeting2 <br>
+Traditional Chinese : $Greeting3 <br>
+<p>
+English : $SpecialDate1 <br>
+Simplified Chinese : $SpecialDate2 <br>
+Traditional Chinese : $SpecialDate3 <br>
+</body>
+</html>

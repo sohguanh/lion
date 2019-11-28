@@ -29,7 +29,12 @@
 			"Enable" : true,
 			"Path" : "templates",
 			"FileExt" : ".pyhtml"				
-		}	
+		},
+		"i18nConfig" : {
+			"Enable" : true,
+			"Path" : "templates/i18n",
+			"FileExt" : ".properties"				
+		}		
 	},
 	"Prod" : {
 		"Site" : {
@@ -60,6 +65,11 @@
 			"Enable" : true,
 			"Path" : "templates",
 			"FileExt" : ".pyhtml"				
+		},
+		"i18nConfig" : {
+			"Enable" : true,
+			"Path" : "templates/i18n",
+			"FileExt" : ".properties"				
 		}		
 	}
 }
