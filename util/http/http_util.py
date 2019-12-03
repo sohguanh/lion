@@ -160,7 +160,7 @@ def process(self: httpServer.BaseHTTPRequestHandler, method):
         self.wfile.write(bytearray('I am alive!', 'utf-8'))
         return
 
-    if self.config['Site']['UrlRewrite']:
+    if self.config['UrlRewriteConfig']['Enable']:
         urlpath = httpUtil.get_rewrite_url(self.path)
 
     if self.static_file_path is not None and self.path.startswith(self.static_file_path):

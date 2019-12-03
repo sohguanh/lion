@@ -1,3 +1,4 @@
+import io
 import json
 import os
 import logging
@@ -35,7 +36,7 @@ class Config:
             raise Exception("This class is a singleton!")
         else:
             dir_path = os.path.dirname(os.path.realpath(__file__))
-            with open("".join([dir_path, os.path.sep, "config.json"])) as json_file:
+            with io.open("".join([dir_path, os.path.sep, "config.json"]), mode="r", encoding="utf-8") as json_file:
                 data = json.load(json_file)
             env = data["Env"]
             Config.__instance = data[env]

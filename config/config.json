@@ -14,8 +14,7 @@
 			"WriteTimeoutSec" : 30,
 			"IdleTimeoutSec" : 60,
 			"MaxHeaderBytes" : 1000000,
-			"StaticFilePath" : "<static_file_path>",
-			"UrlRewrite" : true
+			"StaticFilePath" : "<static_file_path>"
 		},
 		"Database" : {
 			"Name" : "<db_name>",
@@ -34,6 +33,10 @@
 			"Enable" : true,
 			"Path" : "templates/i18n",
 			"FileExt" : ".properties"				
+		},
+		"UrlRewriteConfig" : {
+			"Enable" : true,
+			"File" : "config/urlrewrite.json"
 		}		
 	},
 	"Prod" : {
@@ -50,8 +53,7 @@
 			"WriteTimeoutSec" : 30,
 			"IdleTimeoutSec" : 60,
 			"MaxHeaderBytes" : 1000000,
-			"StaticFilePath" : "<static_file_path>",
-			"UrlRewrite" : true
+			"StaticFilePath" : "<static_file_path>"
 		},
 		"Database" : {
 			"Name" : "<db_name>",
@@ -70,6 +72,10 @@
 			"Enable" : true,
 			"Path" : "templates/i18n",
 			"FileExt" : ".properties"				
+		},
+		"UrlRewriteConfig" : {
+			"Enable" : true,
+			"File" : "config/urlrewrite.json"
 		}		
 	}
 }

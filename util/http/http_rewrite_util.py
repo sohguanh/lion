@@ -1,4 +1,7 @@
+import io
+import json
 import logging
+import os
 import re
 
 import util.http as httpUtil
@@ -84,3 +87,22 @@ def get_rewrite_url_regex(incoming_url) -> str:
         ret_url = "".join([ret_url, "?", back_url])
     logging.debug("exit rewrite regex: "+ret_url)
     return ret_url
+
+
+REWRITE_MODE = {
+    "D": "direct",
+    "R": "regex",
+    "P": "path_param"
+}
+
+
+def get_rewrite_rules(config, dbPool) -> dict:
+    enable = config['UrlRewriteConfig']['Enable']
+    file = "".join([os.getcwd(), os.path.sep, config['UrlRewriteConfig']['File']])
+    if not enable or (file is None or not (os.path.isfile(file) and os.path.exists(file))):
+        return None
+
+    with io.open(file, mode="r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
+
+    return data

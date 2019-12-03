@@ -1,0 +1,40 @@
+{
+	"rules": [
+		{
+			"Name": "hello1",
+			"Mode": "direct",
+			"SourceUrl": "/test/me/1",
+			"TargetUrl": "/hello1"
+		},
+		{
+			"Name": "hello2",
+			"Mode": "direct",			
+			"SourceUrl": "/test/me/2",
+			"TargetUrl": "/hello2"
+		},
+		{
+			"Name": "hello3",
+			"Mode": "regex",
+			"SourceUrl": "^/test/me/[3]$",
+			"TargetUrl": "/hello3/aaa/123"
+		},		
+		{
+			"Name": "hello4",
+			"Mode": "regex",			
+			"SourceUrl": "^/test/me/[4]$",
+			"TargetUrl": "/hello4/bbb/456"
+		},
+		{
+			"Name": "hello5",
+			"Mode": "path_param",			
+			"SourceUrl": "/test/me/5/{hi}/:bye",
+			"TargetUrl": "/hello5/$1/$2"
+		},
+		{
+			"Name": "hello6",
+			"Mode": "path_param",			
+			"SourceUrl": "/test/me/6/{hi}/:bye",
+			"TargetUrl": "/hello6/$1/$2"
+		}
+	]
+}
