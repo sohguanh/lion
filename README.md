@@ -64,6 +64,8 @@ To shutdown, send a SIGINT signal. Ctrl-C for Windows Command Prompt. kill -SIGI
 
 **Sample rewrite url based on the example code**
 
+You can add the url rewrite rules inside util/http/handler_util.py or configure them inside config/urlrewrite.json
+
 | Source Url | Target Url |
 | --- | --- |
 | ht&#8203;tp://localhost:8000/test/me/1 | ht&#8203;tp://localhost:8000/hello1 |
