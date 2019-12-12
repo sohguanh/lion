@@ -7,7 +7,13 @@ Python mini-web framework (Python 3.X and above)
 Ensure config/config.json are setup correctly for your environment.
 
 *Step 2*
-Start to add your application specific code in util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def register_handlers to register your handler. def startup_init show a small example on how to use dbPool which interface with MySQL.
+All application specific code are to be added inside util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def register_handlers to register your handler. def startup_init show a small example on how to use dbPool which interface with MySQL.
+
+*Step 3*
+Once you get the hang of how the framework works and want to start coding from the bare minimum please refer to below.
+1. Remove or move elsewhere the existing util/http/handler_util.py
+2. Rename existing util/http/handler_util_bare.py to util/http/handler_util.py
+3. You can now start to code from the bare minimum
 
 **Different methods for registering handlers to url**
 ```
