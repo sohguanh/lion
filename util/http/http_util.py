@@ -248,3 +248,11 @@ def get_url_param_map(self: httpServer.BaseHTTPRequestHandler):
         return ret_map
     else:
         return None
+
+
+def import_class_from_string(path):
+    from importlib import import_module
+    module_path, _, class_name = path.rpartition('.')
+    mod = import_module(module_path)
+    klass = getattr(mod, class_name)
+    return klass
