@@ -15,6 +15,11 @@ Once you get the hang of how the framework works and want to start coding from t
 2. Rename existing util/http/handler_util_bare.py to util/http/handler_util.py
 3. You can now start to code from the bare minimum
 
+*Step 4*
+For MySQL interfacing, please take note by default it is turned off at code level. Once you get MySQL up and MySQL Connector dependency package installed, please refer to existing ```lion.py``` The comments are quite clear on how to turn off and on. You just need to comment and uncomment the relevant lines.
+- line 37        # dbPool = dbUtil.Db(config).get_instance(config) #uncomment this line once MySQL is up
+- line 38        dbPool = None  # comment/remove this line once MySQL is up
+
 **Different methods for registering handlers to url**
 ```
 httpUtil.register_handler
