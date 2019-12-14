@@ -1,0 +1,134 @@
+{
+	"handlers": [
+		{
+			"Name": "hello111",
+			"Mode": "handler",
+			"Url": "/hello111",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyHandler",
+					"Attributes": [
+						{
+							"name": "My Company Handler"
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "hello222",
+			"Mode": "chain_handler",
+			"Url": "/hello222",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Handler 1",
+                            "ret": true,
+                            "config": null				
+						}
+					]
+				},
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Handler 2",
+                            "ret": true,
+                            "config": null				
+						}
+					]
+				}				
+			]
+		},
+		{
+			"Name": "hello333",
+			"Mode": "handler_regex",
+			"Url": "^/hello333/.*/123+",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyHandler",
+					"Attributes": [
+						{
+							"name": "My Company Regex Handler"
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "hello444",
+			"Mode": "chain_handler_regex",
+			"Url": "^/hello444/.*/456$",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Regex Handler 1",
+                            "ret": true,
+                            "config": null							
+						}
+					]
+				},
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Regex Handler 2",
+                            "ret": true,
+                            "config": null				
+						}
+					]
+				}				
+			]
+		},
+		{
+			"Name": "hello555",
+			"Mode": "handler_path_param",
+			"Url": "/hello555/{hi}/:bye",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyPathParamHandler",
+					"Attributes": [
+						{
+							"name": "My Company Path Param Handler"
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "hello666",
+			"Mode": "chain_handler_path_param",
+			"Url": "/hello666/{hi}/:bye",
+			"Methods": ["get", "post"],
+			"Handler": [
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainPathParamHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Path Param Handler 1",
+                            "ret": true							
+						}
+					]
+				},
+				{
+					"Klass": "sg.mycom.handler.MyCompanyChainPathParamHandler",
+					"Attributes": [
+						{
+							"chain_name": "My Company Chain Path Param Handler 2",
+                            "ret": true							
+						}
+					]
+				}				
+			]
+		}		
+	]
+}

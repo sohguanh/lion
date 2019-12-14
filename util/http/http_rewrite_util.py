@@ -106,3 +106,15 @@ def get_rewrite_rules(config, dbPool) -> dict:
         data = json.load(json_file)
 
     return data
+
+
+def get_handler_rules(config, dbPool) -> dict:
+    enable = config['HandlerConfig']['Enable']
+    file = "".join([os.getcwd(), os.path.sep, config['HandlerConfig']['File']])
+    if not enable or (file is None or not (os.path.isfile(file) and os.path.exists(file))):
+        return None
+
+    with io.open(file, mode="r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
+
+    return data

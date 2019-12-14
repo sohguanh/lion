@@ -37,6 +37,10 @@
 		"UrlRewriteConfig" : {
 			"Enable" : true,
 			"File" : "config/urlrewrite.json"
+		},
+		"HandlerConfig" : {
+			"Enable" : true,
+			"File" : "config/handlers.json"
 		}		
 	},
 	"Prod" : {
@@ -76,6 +80,10 @@
 		"UrlRewriteConfig" : {
 			"Enable" : true,
 			"File" : "config/urlrewrite.json"
+		},
+		"HandlerConfig" : {
+			"Enable" : true,
+			"File" : "config/handlers.json"
 		}		
 	}
 }
