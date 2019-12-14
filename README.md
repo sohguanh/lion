@@ -9,13 +9,62 @@ Ensure config/config.json are setup correctly for your environment.
 *Step 2*
 All application specific code are to be added inside util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def register_handlers to register your handler. def startup_init show a small example on how to use dbPool which interface with MySQL.
 
-*Step 3*
+If your application specific handlers are very simple, you can configure them inside config/handlers.json. Similarly if your url rewrite rules are very simple, you can configure them inside config/urlrewrite.json
+
+The code snippet to read from config file and register handers are in util/http/handler_util.py from line 172 onwards.
+
+```
+    data = httpUtil.get_handler_rules(config, dbPool)
+    if data is not None:
+        for item in data["handlers"]:
+            if item["Mode"] in ['handler', 'handler_regex', 'handler_path_param']:
+                klass = item["Handler"][0]
+                obj = httpUtil.import_class_from_string(klass["Klass"])()
+                for attr in klass["Attributes"]:
+                    for key, value in attr.items():
+                        setattr(obj, key, value)
+                if item["Mode"] == 'handler':
+                    httpUtil.register_handler(item["Url"], obj, item["Methods"])
+                elif item["Mode"] == 'handler_regex':
+                    httpUtil.register_handler_regex(item["Url"], obj, item["Methods"])
+                elif item["Mode"] == 'handler_path_param':
+                    httpUtil.register_handler_path_param(item["Url"], obj, item["Methods"])
+            elif item["Mode"] in ['chain_handler', 'chain_handler_regex', 'chain_handler_path_param']:
+                objArr = []
+                for klass in item["Handler"]:
+                    obj = httpUtil.import_class_from_string(klass["Klass"])()
+                    for attr in klass["Attributes"]:
+                        for key, value in attr.items():
+                            setattr(obj, key, value)
+                    objArr.append(obj)
+                if item["Mode"] == 'chain_handler':
+                    httpUtil.register_chain_handler(item["Url"], objArr, item["Methods"])
+                elif item["Mode"] == 'chain_handler_regex':
+                    httpUtil.register_chain_handler_regex(item["Url"], objArr, item["Methods"])
+                elif item["Mode"] == 'chain_handler_path_param':
+                    httpUtil.register_chain_handler_path_param(item["Url"], objArr, item["Methods"])
+```
+
+The code snippet to read from config file and register url rewrite rules are in util/http/handler_util.py from line 203 onwards.
+```
+    data = httpUtil.get_rewrite_rules(config, dbPool)
+    if data is not None:
+        for item in data["rules"]:
+            if item["Mode"] == httpUtil.REWRITE_MODE["D"]:
+                httpUtil.add_rewrite_url(item["SourceUrl"], item["TargetUrl"])
+            elif item["Mode"] == httpUtil.REWRITE_MODE["R"]:
+                httpUtil.add_rewrite_url_regex(item["SourceUrl"], item["TargetUrl"])
+            elif item["Mode"] == httpUtil.REWRITE_MODE["P"]:
+                httpUtil.add_rewrite_url_path_param(item["SourceUrl"], item["TargetUrl"])
+```
+
+*Step 4*
 Once you get the hang of how the framework works and want to start coding from the bare minimum please refer to below.
 1. Remove or move elsewhere the existing util/http/handler_util.py
 2. Rename existing util/http/handler_util_bare.py to util/http/handler_util.py
 3. You can now start to code from the bare minimum
 
-*Step 4*
+*Step 5*
 For MySQL interfacing, please take note by default it is turned off at code level. Once you get MySQL up and MySQL Connector dependency package installed, please refer to existing ```lion.py``` The comments are quite clear on how to turn off and on. You just need to comment and uncomment the relevant lines.
 - line 37        # dbPool = dbUtil.Db(config).get_instance(config) #uncomment this line once MySQL is up
 - line 38        dbPool = None  # comment/remove this line once MySQL is up
@@ -88,7 +137,7 @@ You can add the url rewrite rules inside util/http/handler_util.py or configure 
 
 **Internalization aka i18n**
 
-Implementation is **different** from Python normal approach. It is model after Java Locale, ResourceBundle, .properties file concept instead. Follow below steps to understand to use. Then change accordingly to your needs.
+Implementation is **different** from Python normal approach. It is model after Java Locale, ResourceBundle, .properties file concept instead. Follow below steps to understand how to use. Then change accordingly to your needs.
 
 *Step 1*
 Inside config/config.json configure under i18nConfig. The attribute names are self-explanatory.
