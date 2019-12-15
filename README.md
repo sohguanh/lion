@@ -103,10 +103,10 @@ class ChainPathParamHandler(ABC):
 		return False
 ```
 
-*Step 3*
+*Step 6*
 From Windows Command Prompt or Linux terminal, type <path_to_python3.X> lion.py or <path_to_python3.X> lion.py &
 
-*Step 4*
+*Step 7*
 Use a browser and navigate to your configured url in Step 1 config.json e.g ht&#8203;tp://localhost:8000
 You should see a message I am alive! This mean your http server is up and running.
 To shutdown, send a SIGINT signal. Ctrl-C for Windows Command Prompt. kill -SIGINT <pid> for Linux.
