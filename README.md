@@ -9,6 +9,7 @@ Ensure config/config.json are setup correctly for your environment.
 *Step 2*
 All application specific code are to be added inside util/http/handler_util.py. Refer to the extensive comments in the file to learn how to add your own handler for the url. def register_handlers to register your handler. def startup_init show a small example on how to use dbPool which interface with MySQL.
 
+*Step 3*
 If your application specific handlers are very simple, you can configure them inside config/handlers.json. Similarly if your url rewrite rules are very simple, you can configure them inside config/urlrewrite.json
 
 The code snippet to read from config file and register handers are in util/http/handler_util.py from line 172 onwards.
