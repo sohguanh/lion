@@ -172,19 +172,7 @@ def register_handlers(config, dbPool):
     data = httpUtil.get_handler_rules(config, dbPool)
     if data is not None:
         for item in data["handlers"]:
-            if item["Mode"] in ['handler', 'handler_regex', 'handler_path_param']:
-                klass = item["Handler"][0]
-                obj = httpUtil.import_class_from_string(klass["Klass"])()
-                for attr in klass["Attributes"]:
-                    for key, value in attr.items():
-                        setattr(obj, key, value)
-                if item["Mode"] == 'handler':
-                    httpUtil.register_handler(item["Url"], obj, item["Methods"])
-                elif item["Mode"] == 'handler_regex':
-                    httpUtil.register_handler_regex(item["Url"], obj, item["Methods"])
-                elif item["Mode"] == 'handler_path_param':
-                    httpUtil.register_handler_path_param(item["Url"], obj, item["Methods"])
-            elif item["Mode"] in ['chain_handler', 'chain_handler_regex', 'chain_handler_path_param']:
+            if item["Mode"] in ['handler', 'handler_regex', 'handler_path_param', 'chain_handler', 'chain_handler_regex', 'chain_handler_path_param']:
                 objArr = []
                 for klass in item["Handler"]:
                     obj = httpUtil.import_class_from_string(klass["Klass"])()
@@ -192,7 +180,14 @@ def register_handlers(config, dbPool):
                         for key, value in attr.items():
                             setattr(obj, key, value)
                     objArr.append(obj)
-                if item["Mode"] == 'chain_handler':
+
+                if item["Mode"] == 'handler':
+                    httpUtil.register_handler(item["Url"], objArr[0], item["Methods"])
+                elif item["Mode"] == 'handler_regex':
+                    httpUtil.register_handler_regex(item["Url"], objArr[0], item["Methods"])
+                elif item["Mode"] == 'handler_path_param':
+                    httpUtil.register_handler_path_param(item["Url"], objArr[0], item["Methods"])
+                elif item["Mode"] == 'chain_handler':
                     httpUtil.register_chain_handler(item["Url"], objArr, item["Methods"])
                 elif item["Mode"] == 'chain_handler_regex':
                     httpUtil.register_chain_handler_regex(item["Url"], objArr, item["Methods"])
